@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #00f260, #0575e6);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            transition: background 0.3s;
+        }
+
+        #calculator {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+        }
+
+        #display {
+            width: 100%;
+            height: 40px;
+            border: none;
+            background: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            text-align: right;
+            padding: 10px;
+            font-size: 1.2em;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background: #007BFF;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 1.8em;
+        }
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <h1>Calculator</h1>
+        <input type="text" id="display" disabled>
+        <div class="row">
+            <button onclick="appendNumber('1')">1</button>
+            <button onclick="appendNumber('2')">2</button>
+            <button onclick="appendNumber('3')">3</button>
+            <button onclick="appendNumber('+')">+</button>
+        </div>
+        <div class="row">
+            <button onclick="appendNumber('4')">4</button>
+            <button onclick="appendNumber('5')">5</button>
+            <button onclick="appendNumber('6')">6</button>
+            <button onclick="appendNumber('-')">-</button>
+        </div>
+        <div class="row">
+            <button onclick="appendNumber('7')">7</button>
+            <button onclick="appendNumber('8')">8</button>
+            <button onclick="appendNumber('9')">9</button>
+            <button onclick="appendNumber('*')">*</button>
+        </div>
+        <div class="row">
+            <button onclick="appendNumber('0')">0</button>
+            <button onclick="calculate()">=</button>
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="appendNumber('/')">/</button>
+        </div>
+    </div>
+    <script>
+        function appendNumber(num) {
+            document.getElementById("display").value += num;
+            changeBackground(num);
+        }
+
+        function calculate() {
+            const display = document.getElementById("display");
+            try {
+                display.value = eval(display.value);
+            } catch {
+                display.value = "Error";
+            }
+        }
+
+        function clearDisplay() {
+            document.getElementById("display").value = "";
+            document.body.style.background = "linear-gradient(to bottom, #00f260, #0575e6)";
+        }
+
+        function changeBackground(num) {
+            const maxNum = 9;
+            const minNum = 0;
+            const red = (255 / maxNum) * (num - minNum);
+            const blue = 255 - red;
+            const softenedRed = Math.min(red + 100, 255); // Renkleri yumuşatmak için ekledik
+            const softenedBlue = Math.min(blue + 100, 255); // Renkleri yumuşatmak için ekledik
+            document.body.style.background = `linear-gradient(to bottom, rgb(${softenedRed}, 0, ${softenedBlue}), rgb(${softenedRed}, 0, ${softenedBlue}))`;
+        }
+    </script>
+</body>
+</html>
